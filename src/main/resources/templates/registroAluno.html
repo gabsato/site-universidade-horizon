@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Registro de Aluno</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.1.3/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h2>Registro de Aluno</h2>
+    <form th:action="@{/registrar}" th:object="${aluno}" method="post">
+        <div class="mb-3">
+            <label for="nome" class="form-label">Nome</label>
+            <input type="text" class="form-control" id="nome" th:field="*{nome}" required>
+        </div>
+        <div class="mb-3">
+            <label for="senha" class="form-label">Senha</label>
+            <input type="password" class="form-control" id="senha" th:field="*{senha}" required>
+        </div>
+        <div class="mb-3">
+            <label for="dataNascimento" class="form-label">Data de Nascimento</label>
+            <input type="date" class="form-control" id="dataNascimento" th:field="*{dataNascimento}" required>
+        </div>
+        <div class="mb-3">
+            <label for="cep" class="form-label">CEP</label>
+            <input type="text" class="form-control" id="cep" th:field="*{cep}" required>
+        </div>
+        <div class="mb-3">
+            <label for="cidade" class="form-label">Cidade</label>
+            <input type="text" class="form-control" id="cidade" th:field="*{cidade}" readonly>
+        </div>
+        <div class="mb-3">
+            <label for="curso" class="form-label">Curso</label>
+            <input type="text" class="form-control" id="curso" th:field="*{curso}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Registrar</button>
+    </form>
+</div>
+
+<script src="/webjars/jquery/3.6.0/jquery.min.js"></script>
+<script src="/webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // Função para buscar os dados do CEP e preencher a cidade
+    $("#cep").on("blur", function() {
+        var cep = $(this).val().replace(/\D/g, ''); // Remove caracteres não numéricos
+        if (cep.length === 8) { // Verifica se o CEP tem 8 dígitos
+            $.get("https://viacep.com.br/ws/" + cep + "/json/", function(data) {
+                if (!data.erro) {
+                    // Preenche o campo de cidade com a resposta da API
+                    $("#cidade").val(data.localidade);
+                } else {
+                    alert("CEP não encontrado.");
+                    $("#cidade").val(""); // Limpa o campo cidade se o CEP não for encontrado
+                }
+            }).fail(function() {
+                alert("Erro ao buscar o CEP.");
+            });
+        } else {
+            alert("CEP inválido.");
+        }
+    });
+</script>
+
+</body>
+</html>

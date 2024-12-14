@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Bem-Vindo(a) à Universidade</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.1.3/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .card {
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <h2 class="text-center">Bem-Vindo(a), <span th:text="${aluno.nome}"></span>!</h2>
+        <p><strong>Nome:</strong> <span th:text="${aluno.nome}"></span></p>
+        <p><strong>Data de Nascimento:</strong> <span th:text="${aluno.dataNascimento}"></span></p>
+        <p><strong>CEP:</strong> <span th:text="${aluno.cep}"></span></p>
+        <p><strong>Cidade:</strong> <span th:text="${aluno.cidade}"></span></p>
+        <p><strong>Curso:</strong> <span th:text="${aluno.curso}"></span></p>
+        <div class="btn-container text-center">
+            <a th:href="@{/editar/{id}(id=${aluno.id})}" class="btn btn-warning">Editar Informações</a>
+            <a th:href="@{/deletar/{id}(id=${aluno.id})}" class="btn btn-danger">Cancelar Registro</a>
+            <a href="/login" class="btn btn-primary">Voltar para Login</a>
+        </div>
+    </div>
+</div>
+<script src="/webjars/jquery/3.6.0/jquery.min.js"></script>
+<script src="/webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
