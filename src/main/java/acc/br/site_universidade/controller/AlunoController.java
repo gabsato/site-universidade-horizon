@@ -1,6 +1,8 @@
 package acc.br.site_universidade.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +20,8 @@ public class AlunoController {
     @Autowired
     private AlunoRepository alunoRepository;
 
+    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
     // Rota para a página de login
     @GetMapping("/login")
     public String loginPage(Model model) {
@@ -25,13 +29,12 @@ public class AlunoController {
         return "login"; // Renderiza login.html
     }
 
-    // Processar o login
     @PostMapping("/login")
     public String processarLogin(@ModelAttribute("aluno") Aluno aluno, RedirectAttributes redirectAttributes) {
-        // Buscar o aluno pelo nome e senha
-        Aluno alunoEncontrado = alunoRepository.findByNomeAndSenha(aluno.getNome(), aluno.getSenha());
+        // Buscar o aluno pelo nome (ou por email, se preferir)
+        Aluno alunoEncontrado = alunoRepository.findByNome(aluno.getNome());
 
-        if (alunoEncontrado != null) {
+        if (alunoEncontrado != null && passwordEncoder.matches(aluno.getSenha(), alunoEncontrado.getSenha())) {
             // Redireciona para a página de boas-vindas caso as credenciais estejam corretas
             redirectAttributes.addAttribute("id", alunoEncontrado.getId());
             return "redirect:/bemVindo/{id}";
@@ -41,6 +44,8 @@ public class AlunoController {
         redirectAttributes.addFlashAttribute("mensagemErro", "Nome ou senha inválidos!");
         return "redirect:/login";  // Redireciona para a página de login em caso de falha
     }
+
+
 
     // Página de boas-vindas após o login
     @GetMapping("/bemVindo/{id}")
@@ -74,10 +79,13 @@ public class AlunoController {
         Aluno alunoExistente = alunoRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Aluno não encontrado"));
 
-        // Manter a data de nascimento e a senha original, caso não tenha sido alterada
-        if (aluno.getSenha() == null || aluno.getSenha().isEmpty()) {
-            aluno.setSenha(alunoExistente.getSenha());  // Mantém a senha anterior
+        // Se a senha for fornecida, criptografá-la
+        if (aluno.getSenha() != null && !aluno.getSenha().isEmpty()) {
+            aluno.setSenha(passwordEncoder.encode(aluno.getSenha()));  // Criptografa a nova senha
+        } else {
+            aluno.setSenha(alunoExistente.getSenha());  // Mantém a senha anterior se não foi alterada
         }
+
         aluno.setDataNascimento(alunoExistente.getDataNascimento());  // Mantém a data de nascimento
 
         aluno.setId(id); // Atualiza o ID para persistir as mudanças
@@ -91,9 +99,13 @@ public class AlunoController {
     // Processar registro
     @PostMapping("/registrar")
     public String processarRegistro(@ModelAttribute("aluno") Aluno aluno, RedirectAttributes redirectAttributes) {
-        alunoRepository.save(aluno);
+        // Criptografar a senha antes de salvar
+        String senhaCriptografada = passwordEncoder.encode(aluno.getSenha());
+        aluno.setSenha(senhaCriptografada); // Atualiza a senha do aluno com a versão criptografada
+
+        alunoRepository.save(aluno); // Salva o aluno no banco de dados
         redirectAttributes.addAttribute("id", aluno.getId());
-        return "redirect:/bemVindo/{id}";
+        return "redirect:/bemVindo/{id}"; // Redireciona para a página de boas-vindas
     }
 
     // Método para deletar o aluno

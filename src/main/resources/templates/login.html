@@ -16,6 +16,7 @@
                     <h4>Login</h4>
                 </div>
                 <div class="card-body">
+                    <!-- Formulário de Login (POST) -->
                     <form th:action="@{/login}" method="post">
                         <div class="form-group">
                             <label for="nome">Nome</label>
@@ -25,17 +26,20 @@
                             <label for="senha">Senha</label>
                             <input type="password" id="senha" name="senha" class="form-control" required/>
                         </div>
+
+                        <!-- Botão de Login -->
                         <button type="submit" class="btn btn-primary">Login</button>
                     </form>
 
-                    <!-- Mensagem de erro de login -->
+                    <!-- Formulário de Registrar (GET) -->
+                    <div class="mt-3 d-flex justify-content-between">
+                        <form th:action="@{/registrar}" method="get">
+                            <button type="submit" class="btn btn-secondary">Registrar</button>
+                        </form>
+                    </div>
+
+                    <!-- Mensagem de erro, se houver -->
                     <div th:if="${mensagemErro}" th:text="${mensagemErro}" class="mt-3 text-danger"></div>
-
-                    <hr>
-
-                    <form th:action="@{/registrar}" method="get">
-                        <button type="submit" class="btn btn-secondary">Registrar</button>
-                    </form>
                 </div>
             </div>
         </div>

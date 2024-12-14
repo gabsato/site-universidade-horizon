@@ -44,7 +44,7 @@ public class AlunoControllerTest {
 
         assertThat(response.getStatusCodeValue()).isEqualTo(200);
 
-        Aluno alunoSalvo = alunoRepository.findByNome("Fulano Da Silva", "1234");
+        Aluno alunoSalvo = alunoRepository.findByNome("Fulano Da Silva");
         assertThat(alunoSalvo).isNotNull();
         assertThat(alunoSalvo.getNome()).isEqualTo("Fulano Da Silva");
     }

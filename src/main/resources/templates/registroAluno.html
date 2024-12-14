@@ -1,44 +1,79 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Registro de Aluno</title>
+    <title>Registro de Aluno | Universidade Horizon</title>
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/webjars/bootstrap/5.1.3/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/formas.css">
 </head>
 <body>
-<div class="container">
-    <h2>Registro de Aluno</h2>
-    <form th:action="@{/registrar}" th:object="${aluno}" method="post">
-        <div class="mb-3">
-            <label for="nome" class="form-label">Nome</label>
-            <input type="text" class="form-control" id="nome" th:field="*{nome}" required>
-        </div>
-        <div class="mb-3">
-            <label for="senha" class="form-label">Senha</label>
-            <input type="password" class="form-control" id="senha" th:field="*{senha}" required>
-        </div>
-        <div class="mb-3">
-            <label for="dataNascimento" class="form-label">Data de Nascimento</label>
-            <input type="date" class="form-control" id="dataNascimento" th:field="*{dataNascimento}" required>
-        </div>
-        <div class="mb-3">
-            <label for="cep" class="form-label">CEP</label>
-            <input type="text" class="form-control" id="cep" th:field="*{cep}" required>
-        </div>
-        <div class="mb-3">
-            <label for="cidade" class="form-label">Cidade</label>
-            <input type="text" class="form-control" id="cidade" th:field="*{cidade}" readonly>
-        </div>
-        <div class="mb-3">
-            <label for="curso" class="form-label">Curso</label>
-            <input type="text" class="form-control" id="curso" th:field="*{curso}" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Registrar</button>
-    </form>
+<!-- Gradiente no fundo -->
+<div class="gradient-bg"></div>
+
+<!-- Formas geométricas detalhadas no fundo -->
+<div class="background-shapes">
+    <div class="circle circle-1"></div>
+    <div class="circle circle-2"></div>
+    <div class="circle circle-3"></div>
+    <div class="triangle triangle-1"></div>
+    <div class="triangle triangle-2"></div>
+    <div class="diagonal-line"></div>
+    <div class="diagonal-line-2"></div>
 </div>
 
+<div class="container mt-5">
+    <!-- Header com nome da universidade e slogan -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 text-primary">Universidade Horizon</h1>
+        <p class="lead text-secondary">Expandindo Horizontes</p>
+        <p class="lead text-secondary">Transformando Futuros</p>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+            <!-- Formulário de Registro de Aluno -->
+            <div class="card shadow-lg border-light">
+                <div class="card-header text-center">
+                    <h4>Registro de Aluno</h4>
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/registrar}" th:object="${aluno}" method="post">
+                        <div class="mb-3">
+                            <label for="nome" class="form-label">Nome</label>
+                            <input type="text" class="form-control" id="nome" th:field="*{nome}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="senha" class="form-label">Senha</label>
+                            <input type="password" class="form-control" id="senha" th:field="*{senha}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="dataNascimento" class="form-label">Data de Nascimento</label>
+                            <input type="date" class="form-control" id="dataNascimento" th:field="*{dataNascimento}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cep" class="form-label">CEP</label>
+                            <input type="text" class="form-control" id="cep" th:field="*{cep}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cidade" class="form-label">Cidade</label>
+                            <input type="text" class="form-control" id="cidade" th:field="*{cidade}" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="curso" class="form-label">Curso</label>
+                            <input type="text" class="form-control" id="curso" th:field="*{curso}" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Registrar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts -->
 <script src="/webjars/jquery/3.6.0/jquery.min.js"></script>
 <script src="/webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
-
 <script>
     // Função para buscar os dados do CEP e preencher a cidade
     $("#cep").on("blur", function() {
@@ -60,6 +95,5 @@
         }
     });
 </script>
-
 </body>
 </html>

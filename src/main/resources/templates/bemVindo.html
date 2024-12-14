@@ -1,39 +1,71 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Bem-Vindo(a) à Universidade</title>
+    <title>Bem-Vindo(a) à Universidade Horizon</title>
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/webjars/bootstrap/5.1.3/css/bootstrap.min.css">
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-        .container {
-            margin-top: 50px;
-        }
-        .card {
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-    </style>
+    <!-- Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/formas.css">
 </head>
 <body>
 
-<div class="container">
-    <div class="card">
-        <h2 class="text-center">Bem-Vindo(a), <span th:text="${aluno.nome}"></span>!</h2>
-        <p><strong>Nome:</strong> <span th:text="${aluno.nome}"></span></p>
-        <p><strong>Data de Nascimento:</strong> <span th:text="${aluno.dataNascimento}"></span></p>
-        <p><strong>CEP:</strong> <span th:text="${aluno.cep}"></span></p>
-        <p><strong>Cidade:</strong> <span th:text="${aluno.cidade}"></span></p>
-        <p><strong>Curso:</strong> <span th:text="${aluno.curso}"></span></p>
-        <div class="btn-container text-center">
-            <a th:href="@{/editar/{id}(id=${aluno.id})}" class="btn btn-warning">Editar Informações</a>
-            <a th:href="@{/deletar/{id}(id=${aluno.id})}" class="btn btn-danger">Cancelar Registro</a>
-            <a href="/login" class="btn btn-primary">Voltar para Login</a>
+<!-- Gradiente e formas geométricas no fundo -->
+<div class="background-shapes">
+    <div class="circle circle-1"></div>
+    <div class="circle circle-2"></div>
+    <div class="circle circle-3"></div>
+    <div class="triangle triangle-1"></div>
+    <div class="triangle triangle-2"></div>
+    <div class="diagonal-line"></div>
+    <div class="floating-shape"></div>
+
+<div class="container mt-5">
+    <!-- Cartão de Boas-Vindas -->
+    <div class="card shadow-lg rounded-lg">
+        <div class="card-header bg-primary text-white text-center">
+            <h3 class="display-5">Bem-Vindo(a) à Universidade Horizon</h3>
+        </div>
+        <div class="card-body">
+            <h2 class="text-center text-primary mb-4">Olá, <span th:text="${aluno.nome}"></span>!</h2>
+
+            <!-- Informações do Aluno -->
+            <div class="mb-3">
+                <strong>Nome:</strong> <span th:text="${aluno.nome}"></span>
+            </div>
+            <div class="mb-3">
+                <strong>Data de Nascimento:</strong> <span th:text="${aluno.dataNascimento}"></span>
+            </div>
+            <div class="mb-3">
+                <strong>CEP:</strong> <span th:text="${aluno.cep}"></span>
+            </div>
+            <div class="mb-3">
+                <strong>Cidade:</strong> <span th:text="${aluno.cidade}"></span>
+            </div>
+            <div class="mb-3">
+                <strong>Curso:</strong> <span th:text="${aluno.curso}"></span>
+            </div>
+
+            <!-- Botões -->
+            <div class="d-flex justify-content-around">
+                <a th:href="@{/editar/{id}(id=${aluno.id})}" class="btn btn-warning w-100 mx-2">
+                    <i class="fas fa-edit"></i> Editar Informações
+                </a>
+                <a th:href="@{/deletar/{id}(id=${aluno.id})}" class="btn btn-danger w-100 mx-2">
+                    <i class="fas fa-trash-alt"></i> Cancelar Registro
+                </a>
+            </div>
+            <div class="text-center mt-3">
+                <a href="/login" class="btn btn-primary">
+                    <i class="fas fa-sign-in-alt"></i> Voltar para Login
+                </a>
+            </div>
         </div>
     </div>
 </div>
+
+<!-- Scripts -->
 <script src="/webjars/jquery/3.6.0/jquery.min.js"></script>
 <script src="/webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 </body>
